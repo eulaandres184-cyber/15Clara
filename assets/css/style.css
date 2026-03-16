@@ -1,0 +1,305 @@
+:root {
+    --bg-dark: #0b0b0d;
+    --bg-deep: #12131a;
+    --pink: #ff4db8;
+    --pink-soft: #ff8fce;
+    --offwhite: #f6edf7;
+    --text: #fdf9ff;
+    --card: #1d1f2d;
+    --border: #2e2b47;
+    --highlight: #ff59d9;
+    --fuente-elegante: 'Great Vibes', cursive;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; min-height: 100%; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: radial-gradient(circle at 20% 10%, #292a3d 0%, var(--bg-dark) 35%, #090b11 100%);
+    color: var(--text);
+}
+
+.hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(5,5,10,0.8), rgba(8,5,20,0.9)),
+                url('../img/fondo.jpg') center/cover no-repeat;
+    color: #fff;
+    padding: 3rem 1rem;
+}
+.hero h1 {
+    margin: 0;
+    font-family: var(--fuente-elegante);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 20px rgba(255, 77, 184, 0.5);
+}
+.hero p {
+    margin: 10px 0 0;
+    font-size: clamp(1rem, 2vw, 1.7rem);
+    color: #ffe8ff;
+}
+
+.info {
+    width: min(100%, 900px);
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+.time-box {
+    width: 90px;
+    background: linear-gradient(145deg, #2d2f4b, #1f1634);
+    border: 1px solid rgba(255, 77, 184, 0.4);
+    border-radius: 14px;
+    padding: 0.7rem 0.4rem;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+}
+.time-box span {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffb3e7;
+}
+.time-box p {
+    margin: 2px 0 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: #d9d5eb;
+}
+
+.actions {
+    margin-top: 1.2rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+.btn {
+    padding: 0.7rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 1px solid transparent;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 9px 18px rgba(0,0,0,0.3); }
+
+.btn-maps {
+    background: #ff4db8;
+    color: #fff;
+    border-color: #ff8ccf;
+}
+.btn-rsvp {
+    background: #1f1b35;
+    color: #ff9fdd;
+    border-color: #ff4db8;
+}
+
+.music-btn {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #17162d;
+    border: 2px solid #ff4db8;
+    color: #ffd9f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #2a233f 0%, #0d0d17 70%, #09090f 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.modal-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.stars-container {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.25;
+    pointer-events: none;
+}
+
+/* Lluvia de Confeti Plateado */
+.confetti-rain {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(3px 3px at 10% 10%, var(--silver) 100%, transparent 0),
+        radial-gradient(4px 4px at 30% 50%, #e0e0e0 100%, transparent 0),
+        radial-gradient(3px 3px at 50% 20%, var(--silver) 100%, transparent 0),
+        radial-gradient(4px 4px at 70% 80%, #ffffff 100%, transparent 0),
+        radial-gradient(3px 3px at 90% 40%, var(--silver) 100%, transparent 0);
+    background-size: 200px 400px;
+    animation: rain 4s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes rain {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 400px; }
+}
+
+/* Estilo del Sello de Lacre */
+.wax-seal {
+    width: clamp(60px, 12vw, 90px);
+    height: clamp(60px, 12vw, 90px);
+    background: #d81b7a; /* Rosa oscuro/lacre */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+    /* Efecto de relieve real */
+    box-shadow: 
+        inset 2px 2px 5px rgba(255,255,255,0.4),
+        inset -2px -2px 5px rgba(0,0,0,0.5),
+        0 4px 10px rgba(0,0,0,0.5);
+    border: 3px solid #ff4db8;
+    transform: rotate(-5deg); /* Un poco inclinado para naturalidad */
+    transition: transform 0.3s ease;
+}
+
+.wax-seal:hover {
+    transform: rotate(0deg) scale(1.1);
+}
+
+.seal-icon {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.8));
+    user-select: none;
+}
+
+/* Ajuste para que la solapa no tape el sello si es muy grande */
+.envelope-flap {
+    z-index: 2;
+}
+.envelope-body {
+    z-index: 3; /* El sello queda por encima de la solapa cerrada */
+}
+
+
+.envelope-wrapper {
+    position: relative;
+    z-index: 100; /* Aseguramos que esté por encima de estrellas y confeti */
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Mobile First: 70% en celu para que se vea bien, 50% en pantallas más grandes */
+    width: 70vw; 
+    max-width: 500px; 
+}
+
+/* En tablets y desktop baja al 50% o el tope de 500px */
+@media (min-width: 768px) {
+    .envelope-wrapper {
+        width: 50vw;
+    }
+}
+
+.envelope-wrapper:hover { 
+    transform: scale(1.05); 
+}
+
+.envelope {
+    width: 100%;
+    aspect-ratio: 3 / 2; /* Mantiene la proporción clásica de sobre */
+    border-radius: 0 0 12px 12px;
+    background: linear-gradient(180deg, #ff6ec7, #ff2ea2);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60%; /* La solapa baja hasta la mitad */
+    background: #ffcae6;
+    /* Creamos el triángulo de la solapa de forma responsiva */
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    z-index: 2;
+}
+
+.envelope-body { 
+    width: 100%;
+    height: 100%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    position: relative;
+    z-index: 1;
+}
+
+.envelope-text {
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.9);
+    padding: 2% 6%; /* Padding responsivo */
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    font-family: serif;
+    font-size: clamp(0.9rem, 3vw, 1.5rem); /* El texto se agranda según la pantalla */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.tap-instruction {
+    color: #ffd7f0;
+    margin-top: 1.5rem;
+    font-size: clamp(0.7rem, 2vw, 1rem);
+    letter-spacing: 0.15em;
+    animation: pulse 1.8s infinite;
+    text-transform: uppercase;
+    font-weight: 600;
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: scale(0.99); }
+    50% { opacity: 1; transform: scale(1.02); }
+}
+
+}

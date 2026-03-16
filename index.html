@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis 15 Años - Clara</title>
+    <!-- Enlace al CSS en la subcarpeta -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+</head>
+<body>
+    <!-- Modal de Bienvenida -->
+    <div id="welcomeModal" class="modal-overlay">
+        <!-- Contenedor de estrellas y confeti (animado por CSS) -->
+        <div class="stars-container"></div>
+        <div class="confetti-rain"></div>
+
+
+        <!-- Sobre Rosa -->
+        <div class="envelope-wrapper" onclick="startExperience()">
+            <div class="envelope">
+                <div class="envelope-flap">
+                    <div class="envelope-body">
+                    </div>
+                </div>
+                <div class="wax-seal">
+                        <span class="seal-icon">15</span>
+                    </div>
+            </div>
+            <br>
+            <p class="tap-instruction">Tocá el sobre para abrir</p>
+        </div>
+    </div>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="fade-in">Clara</h1>
+            <p class="fade-in">Mis 15 Años</p>
+        </div>
+    </header>
+
+    <section class="info">
+        <div class="countdown" id="countdown">
+            <div class="time-box"><span id="days">00</span><p>Días</p></div>
+            <div class="time-box"><span id="hours">00</span><p>Hs</p></div>
+            <div class="time-box"><span id="mins">00</span><p>Min</p></div>
+        </div>
+        
+        <div class="actions reveal">
+            <a href="https://maps.google.com" target="_blank" class="btn btn-maps">📍 Ver Ubicación</a>
+            <a href="https://wa.me" class="btn btn-rsvp">✅ Confirmar</a>
+        </div>
+    </section>
+
+    <!-- Reproductor de Audio (ruta actualizada) -->
+    <audio id="musicaFondo" loop>
+        <source src="assets/audio/musica-clara.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="musicControl" class="music-btn">
+        <span id="musicIcon">🎵</span>
+    </div>
+
+    <!-- Enlace al JS en la subcarpeta -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
