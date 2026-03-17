@@ -4,7 +4,7 @@
     --pink: #ff4db8;
     --pink-soft: #ff8fce;
     --offwhite: #f6edf7;
-    --text: #fdf9ff;
+    --text: #FFE5AD;
     --card: #1d1f2d;
     --border: #2e2b47;
     --highlight: #ff59d9;
@@ -16,32 +16,44 @@ html, body { margin: 0; padding: 0; min-height: 100%; }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background: radial-gradient(circle at 20% 10%, #292a3d 0%, var(--bg-dark) 35%, #090b11 100%);
+    background: /* radial-gradient(circle at 20% 10%, #292a3d 0%, var(--bg-dark) 35%, #090b11 100%) */
+            url('../assets/img/background1.png') center/cover no-repeat;
     color: var(--text);
+    
 }
 
 .hero {
-    min-height: 80vh;
+    min-height: 100vh;   
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column; /* Alinea los hijos verticalmente */
+    align-items: center;    /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente en la pantalla */
+    
     text-align: center;
-    background: linear-gradient(180deg, rgba(5,5,10,0.8), rgba(8,5,20,0.9)),
-                url('../img/fondo.jpg') center/cover no-repeat;
-    color: #fff;
+    color: #fcd88c;
     padding: 3rem 1rem;
+    gap: 2rem;              /* Agrega espacio controlado entre el nombre y la frase */
 }
+
 .hero h1 {
     margin: 0;
     font-family: var(--fuente-elegante);
-    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-size: clamp(5rem, 8vw, 5rem);
     letter-spacing: 0.08em;
-    text-shadow: 0 0 20px rgba(255, 77, 184, 0.5);
 }
-.hero p {
+
+/* Estilo para "Mis 15 años" */
+.hero-content p {
     margin: 10px 0 0;
-    font-size: clamp(1rem, 2vw, 1.7rem);
-    color: #ffe8ff;
+    font-size: clamp(1.25rem, 2vw, 1.7rem);
+    color: #FFE5AD;
+}
+
+/* Estilo para el bloque de la frase */
+.frase p {
+    color: #fcd88c;
+    max-width: 800px;       /* Evita que el texto se estire demasiado en pantallas anchas */
+    line-height: 1.6;       /* Mejora la legibilidad */
 }
 
 .info {
@@ -196,8 +208,8 @@ body {
         inset 2px 2px 5px rgba(255,255,255,0.4),
         inset -2px -2px 5px rgba(0,0,0,0.5),
         0 4px 10px rgba(0,0,0,0.5);
-    border: 3px solid #EED09D;
-    transform: rotate(-2deg); /* Un poco inclinado para naturalidad */
+    border: 3px solid #f7ca7e;
+   /*  transform: rotate(-2deg); /* Un poco inclinado para naturalidad */
     transition: transform 0.3s ease;
 }
 
@@ -207,8 +219,9 @@ body {
 
 .seal-icon {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
-    filter: drop-shadow(0 0 5px #e4a63b);
+    filter: drop-shadow(0 0 5px #f1d29c);
     user-select: none;
+    color : #e7a93d;
 }
 
 /* Ajuste para que la solapa no tape el sello si es muy grande */
@@ -277,7 +290,7 @@ body {
 }
 
 .envelope-text {
-    color: #f5cc5b;
+    color: #f1dfab;
     border: 2px solid rgba(255,255,255,0.9);
     padding: 2% 6%; /* Padding responsivo */
     border-radius: 999px;
