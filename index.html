@@ -63,9 +63,19 @@
         </div>
     </section>
 
+    <section class="carousel-section">
+        <h2>Galería de Fotos</h2>
+        <div class="carousel">
+            <button class="carousel-btn prev" onclick="prevImage()">&#10094;</button>
+            <img id="carousel-image" src="assets/img/IMG-20260303-WA0158.jpg.jpeg" alt="Foto">
+            <button class="carousel-btn next" onclick="nextImage()">&#10095;</button>
+        </div>
+        <div class="carousel-indicators" id="indicators"></div>
+    </section>
+
     <!-- Reproductor de Audio (ruta actualizada) -->
     <audio id="musicaFondo" loop>
-        <source src="assets/audio/musica-clara.mp3" type="audio/mpeg">
+        <source src="assets/musica/Ed Sheeran - Photograph.mp3" type="audio/mpeg">
     </audio>
 
     <div id="musicControl" class="music-btn">
