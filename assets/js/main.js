@@ -2,26 +2,16 @@ const audio = document.getElementById("musicaFondo");
 const btnMusica = document.getElementById("musicControl");
 const icon = document.getElementById("musicIcon");
 
-// Control de Música
+let isMuted = false;
+
+// Control de Música - Toggle Mute/Unmute
 if (btnMusica) {
     btnMusica.addEventListener("click", () => {
-        if (audio.paused) {
-            audio.play();
-            icon.innerText = "⏸️";
-        } else {
-            audio.pause();
-            icon.innerText = "🎵";
-        }
+        isMuted = !isMuted;
+        audio.volume = isMuted ? 0 : 1;
+        icon.innerText = isMuted ? "🔇" : "🔊";
     });
 }
-
-// Autoplay al primer toque
-window.addEventListener("click", () => {
-    if (audio && audio.paused) {
-        audio.play();
-        if (icon) icon.innerText = "⏸️";
-    }
-}, { once: true });
 
 // Cuenta regresiva
 const target = new Date("Aug 22, 2026 21:30:00").getTime();
@@ -99,6 +89,8 @@ function startExperience() {
         musica.play().catch(error => {
             console.log("El navegador bloqueó el autoplay, pero el clic debería permitirlo.");
         });
+        if (icon) icon.innerText = "🔊";
+        isMuted = false;
     }
 }
 
