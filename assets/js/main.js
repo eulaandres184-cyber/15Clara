@@ -59,9 +59,39 @@ updateCountdown(); // Ejecutar inmediatamente para no esperar 1 segundo
 
 //FUNCION PARA INICIAR LA EXPERIENCIA DESPUÉS DE CERRAR EL MODAL
 function startExperience() {
-    // Ocultar el modal
     const modal = document.getElementById('welcomeModal');
-    if (modal) modal.classList.add('hidden');
+    const header = document.querySelector('header');
+    const carouselSection = document.querySelector('section.container');
+    const infoSection = document.querySelector('section.info');
+    
+    if (modal) {
+        // Agregar la clase para iniciar el fade-out del modal
+        modal.classList.add('fading-out');
+        
+        // Iniciar el fade-in del contenido principal con delays progresivos
+        if (header) {
+            setTimeout(() => {
+                header.classList.add('fade-in-content');
+            }, 100);
+        }
+        
+        if (carouselSection) {
+            setTimeout(() => {
+                carouselSection.classList.add('fade-in-content');
+            }, 300);
+        }
+        
+        if (infoSection) {
+            setTimeout(() => {
+                infoSection.classList.add('fade-in-content');
+            }, 500);
+        }
+        
+        // Esperar a que termine la animación de fade-out antes de ocultar el modal completamente
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 600);
+    }
 
     // Reproducir la música automáticamente al entrar
     const musica = document.getElementById('musicaFondo');
@@ -70,4 +100,37 @@ function startExperience() {
             console.log("El navegador bloqueó el autoplay, pero el clic debería permitirlo.");
         });
     }
+}
+
+// Indicador de Scroll - Mostrar/Ocultar y hacer clickeable
+const scrollIndicator = document.querySelector('.scroll-indicator');
+const heroSection = document.querySelector('.hero');
+
+if (scrollIndicator) {
+    // Mostrar el indicador al comienzo
+    scrollIndicator.classList.remove('hidden');
+    
+    // Manejar el click en el indicador para hacer scroll suave
+    scrollIndicator.addEventListener('click', () => {
+        const carouselSection = document.querySelector('section.container');
+        if (carouselSection) {
+            carouselSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+    
+    // Cambiar visibilidad del indicador basado en el scroll
+    const toggleScrollIndicator = () => {
+        const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+        const currentScroll = window.pageYOffset + window.innerHeight;
+        
+        // Si hemos descendido más allá del hero, ocultar el indicador
+        if (currentScroll > heroBottom) {
+            scrollIndicator.classList.add('hidden');
+        } else {
+            scrollIndicator.classList.remove('hidden');
+        }
+    };
+    
+    window.addEventListener('scroll', toggleScrollIndicator);
+    window.addEventListener('resize', toggleScrollIndicator);
 }

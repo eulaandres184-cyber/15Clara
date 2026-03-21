@@ -23,8 +23,22 @@ html, body { margin: 0; padding: 0; min-height: 100%; }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 25%, #2d2d2d 50%, #505050 75%, #696969 100%);
+    background: linear-gradient(180deg, #616161 0%, #797979 25%, #2d2d2d 50%, #505050 75%, #696969 100%);
     color: var(--text);
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/backmodal.png') center/cover no-repeat fixed;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: -1;
 }
 
 .hero {
@@ -35,7 +49,7 @@ body {
     justify-content: center; /* Centra verticalmente en la pantalla */
     
     text-align: center;
-    color: #f7b21f;
+    color: var(--text);
     padding: 3rem 1rem;
     gap: 2rem;              /* Agrega espacio controlado entre el nombre y la frase */
 }
@@ -51,7 +65,7 @@ body {
 .hero-content p {
     margin: 10px 0 0;
     font-size: clamp(1.25rem, 2vw, 1.7rem);
-    color: #f7b21f;
+    color: #FFE5AD;
 }
 
 /* Carrusel Bootstrap personalizado */
@@ -79,7 +93,7 @@ body {
 
 /* Estilo para el bloque de la frase */
 .frase p {
-    color: #f7b21f;
+    color: #FFE5AD;
     max-width: 800px;
     line-height: 1.6;
 }
@@ -182,6 +196,9 @@ body {
     align-items: center;
     z-index: 9999;
     overflow: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+    opacity: 1;
+    visibility: visible;
 }
 
 .modal-overlay.hidden {
@@ -213,6 +230,26 @@ body {
     background-size: 200px 400px;
     animation: rain 4s linear infinite;
     opacity: 0.6;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease forwards;
+    opacity: 0;
+}
+
+header.fade-in-content,
+section.fade-in-content {
+    animation: fadeIn 0.8s ease forwards;
+    animation-delay: 0.2s;
 }
 
 @keyframes rain {
@@ -337,6 +374,56 @@ body {
     animation: pulse 1.8s infinite;
     text-transform: uppercase;
     font-weight: 600;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.fading-out .tap-instruction {
+    animation: none;
+}
+
+.scroll-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    font-size: 2rem;
+    color: #f7b21f;
+    animation: bounce 2s infinite;
+    cursor: pointer;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-indicator.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.arrow-down {
+    display: inline-block;
+    animation: fadeInOut 1.5s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(8px);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 @keyframes pulse {
     0%, 100% { opacity: 0.5; transform: scale(0.99); }

@@ -51,40 +51,24 @@
         <div>
 
         </div>
-        <div class="countdown">
-            <div class="countdown-item">
-                <span id="days">0</span>
-                <p>Días</p>
-            </div>
-            <div class="countdown-item">
-                <span id="hours">0</span>
-                <p>Horas</p>
-            </div>
-            <div class="countdown-item">
-                <span id="mins">0</span>
-                <p>Minutos</p>
-            </div>
+
+        <div class="countdown" id="countdown">
+            <div class="time-box"><span id="days">0</span>
+                <p>Días</p></div>
+            <div class="time-box"><span id="hours">0</span><p>Hs</p></div>
+            <div class="time-box"><span id="mins">0</span><p>Min</p></div>
         </div>
+        
+        <div class="scroll-indicator">
+            <span class="arrow-down">↓</span>
+        </div>
+        
     </header>
 
     <!-- Carrusel Bootstrap -->
     <section class="container my-5">
         <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-            <!-- <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="4" aria-label="Slide 5"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="5" aria-label="Slide 6"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="6" aria-label="Slide 7"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="7" aria-label="Slide 8"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="8" aria-label="Slide 9"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="9" aria-label="Slide 10"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="10" aria-label="Slide 11"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="11" aria-label="Slide 12"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="12" aria-label="Slide 13"></button>
-            </div> -->
+
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="assets/img/1.jpg" class="d-block w-100" alt="Imagen 1">
@@ -145,11 +129,7 @@
 
 
     <section class="info">
-        <!-- <div class="countdown" id="countdown">
-            <div class="time-box"><span id="days"></span><p>Días</p></div>
-            <div class="time-box"><span id="hours"></span><p>Hs</p></div>
-            <div class="time-box"><span id="mins"></span><p>Min</p></div>
-        </div> -->
+        
         <div class="datos">
             <p>Valor de la tarjeta <br>
                 Mayores $ 65000 <br>
@@ -159,7 +139,10 @@
         </div>
         <div class="actions reveal">
             <a href="https://www.google.com/maps/place/Centro+de+Jubilados+y+Pensionados/@-34.8390562,-64.5850715,21z/data=!4m6!3m5!1s0x95dab9006e818005:0x7b53a881c1f5f5dc!8m2!3d-34.839053!4d-64.584953!16s%2Fg%2F11vz5m7f3m?entry=ttu&g_ep=EgoyMDI2MDMxOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-maps">📍 Ver Ubicación</a>
-            <a href="https://wa.me" class="btn btn-rsvp">✅ Confirmar</a>
+        </div>
+        <div class="actions reveal"> 
+          <a href="https://wa.me/2336453005" class="btn btn-rsvp">✅ Clara </a>
+          <a href="https://wa.me/2302632487" class="btn btn-rsvp">✅ Eli </a>
         </div>
     </section>
    
