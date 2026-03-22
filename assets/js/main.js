@@ -1,3 +1,42 @@
+// ==================== CONFIGURACIÓN DE WHATSAPP ====================
+const WHATSAPP_CONTACTS = {
+    clara: {
+        number: '2336453005',
+        countryCode: '+54',
+        name: 'Clara'
+    },
+    eli: {
+        number: '2302632487',
+        countryCode: '+54',
+        name: 'Eli'
+    }
+};
+
+/**
+ * Genera un enlace de WhatsApp a partir de una clave de contacto
+ * @param {string} contactKey - Clave del contacto (ej: 'clara', 'eli')
+ * @returns {string} URL de WhatsApp completa
+ */
+function generateWhatsappLink(contactKey) {
+    const contact = WHATSAPP_CONTACTS[contactKey];
+    if (!contact) {
+        console.warn(`Contacto '${contactKey}' no encontrado en WHATSAPP_CONTACTS`);
+        return '#';
+    }
+    return `https://wa.me/${contact.countryCode}${contact.number}`;
+}
+
+/**
+ * Inicializa todos los enlaces de WhatsApp en la página
+ */
+function initializeWhatsappLinks() {
+    document.querySelectorAll('[data-whatsapp]').forEach(link => {
+        const contactKey = link.dataset.whatsapp;
+        link.href = generateWhatsappLink(contactKey);
+    });
+}
+
+// ==================== CONFIGURACIÓN DE AUDIO ====================
 const audio = document.getElementById("musicaFondo");
 const btnMusica = document.getElementById("musicControl");
 const icon = document.getElementById("musicIcon");
@@ -92,6 +131,13 @@ function startExperience() {
         if (icon) icon.innerText = "🔊";
         isMuted = false;
     }
+}
+
+// Inicializar enlaces de WhatsApp cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeWhatsappLinks);
+} else {
+    initializeWhatsappLinks();
 }
 
 // Indicador de Scroll - Mostrar/Ocultar y hacer clickeable
