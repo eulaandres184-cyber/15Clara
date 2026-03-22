@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis 15 Años - Clara</title>
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts - Complete Font Library -->
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;700;900&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Lora:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&family=Pacifico&family=Bebas+Neue&family=Cinzel:wght@400;600;700;800;900&family=Cormorant+Garamond:wght@400;500;600;700&family=Italianno&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Enlace al CSS en la subcarpeta -->
     <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Modal de Bienvenida -->
@@ -37,19 +43,16 @@
         <div class="hero-content">
             <h1 class="fade-in">Clara</h1>
             <p class="fade-in">Mis 15 Años</p>
-        </div><br>
+        </div>
         <div class="frase">
             <p>"Hay momentos en la vida que se sueñan desde siempre…
-                y hoy, ese sueño comienza a hacerse realidad.<br>
+                y hoy, <br>ese sueño comienza a hacerse realidad.<br>
                 Esta noche marca un antes y un después en mi historia,
                 y deseo compartirla con las personas que forman parte de mi corazón.<br>
-                Tu presencia será un honor y el detalle más valioso
+                Tu presencia será un honor y el detalle más valioso   
                 en una celebración que quedará guardada para siempre en mi memoria.<br>
                 Una noche mágica e inolvidable"
             </p>
-        </div>
-        <div>
-
         </div>
 
         <div class="countdown" id="countdown">
@@ -57,8 +60,9 @@
                 <p>Días</p></div>
             <div class="time-box"><span id="hours">0</span><p>Hs</p></div>
             <div class="time-box"><span id="mins">0</span><p>Min</p></div>
+            <br>
+            
         </div>
-        
         <div class="scroll-indicator">
             <span class="arrow-down">↓</span>
         </div>
@@ -130,17 +134,21 @@
 
     <section class="info">
         
-        <div class="datos">
-            <p>Valor de la tarjeta <br>
-                Mayores $ 65000 <br>
-                Menores desde los 3 a 10 años: $32.500 <br>
-                ( Se pueden abonar en su totalidad o en tres cuotas antes de agosto )
-            </p>
+        <div class="info-card">
+            <div class="card-title"><i class="fas fa-envelope"></i> Tarjeta</div>
+            <div class="card-content">
+                <p>Valor de la tarjeta<br>
+                Mayores: <strong>$65.000</strong><br>
+                Menores (3 a 10 años): <strong>$32.500</strong><br><br>
+                <em>Se pueden abonar en su totalidad o en tres cuotas antes de agosto</em>
+                </p>
+            </div>
         </div>
+
         <div class="actions reveal">
             <a href="https://www.google.com/maps/place/Centro+de+Jubilados+y+Pensionados/@-34.8390562,-64.5850715,21z/data=!4m6!3m5!1s0x95dab9006e818005:0x7b53a881c1f5f5dc!8m2!3d-34.839053!4d-64.584953!16s%2Fg%2F11vz5m7f3m?entry=ttu&g_ep=EgoyMDI2MDMxOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-maps">📍 Ver Ubicación</a>
-            
         </div>
+
         <div class="actions reveal"> 
           <a href="#" target="_blank" class="btn btn-rsvp" data-whatsapp="clara">✅ Clara </a>
           <a href="#" target="_blank" class="btn btn-rsvp" data-whatsapp="eli">✅ Eli </a>
@@ -148,14 +156,25 @@
     </section>
    
 
-    <!-- Reproductor de Audio (ruta actualizada) -->
-    <audio id="musicaFondo" loop>
-        <source src="assets/musica/Ed Sheeran - Photograph.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Reproductor de Audio (mini footer style) -->
+    <footer class="mini-footer-player">
+        <div class="mini-player">
+            <audio id="musicaFondo" preload="metadata">
+                <source src="assets/musica/Ed Sheeran - Photograph.mp3" type="audio/mpeg">
+            </audio>
 
-    <div id="musicControl" class="music-btn">
-        <span id="musicIcon">🎵</span>
-    </div>
+            <div class="mini-info">
+                <div class="mini-track">Photograph</div>
+                <div class="mini-artist">Ed Sheeran</div>
+            </div>
+
+            <div class="mini-controls">
+                <button id="mini-prev" class="mini-btn" aria-label="Anterior"><i class="fas fa-step-backward"></i></button>
+                <button id="mini-play" class="mini-btn play" aria-label="Play/Pause"><i class="fas fa-pause"></i></button>
+                <button id="mini-next" class="mini-btn" aria-label="Siguiente"><i class="fas fa-step-forward"></i></button>
+            </div>
+        </div>
+    </footer>
 
     <!-- Enlace al JS en la subcarpeta -->
     <script src="assets/js/main.js"></script>

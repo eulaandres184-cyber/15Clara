@@ -36,20 +36,48 @@ function initializeWhatsappLinks() {
     });
 }
 
-// ==================== CONFIGURACIÓN DE AUDIO ====================
+// ==================== MINI FOOTER PLAYER ====================
 const audio = document.getElementById("musicaFondo");
-const btnMusica = document.getElementById("musicControl");
-const icon = document.getElementById("musicIcon");
+const miniPlay = document.getElementById("mini-play");
+const miniPrev = document.getElementById("mini-prev");
+const miniNext = document.getElementById("mini-next");
 
-let isMuted = false;
+if (audio && miniPlay) {
+    const playIcon = miniPlay.querySelector('i');
 
-// Control de Música - Toggle Mute/Unmute
-if (btnMusica) {
-    btnMusica.addEventListener("click", () => {
-        isMuted = !isMuted;
-        audio.volume = isMuted ? 0 : 1;
-        icon.innerText = isMuted ? "🔇" : "🔊";
+    const togglePlay = (ev) => {
+        if (ev && ev.type === 'pointerup') ev.preventDefault();
+        if (audio.paused) {
+            audio.play().catch(() => {});
+            if (playIcon) { playIcon.classList.remove('fa-play'); playIcon.classList.add('fa-pause'); }
+        } else {
+            audio.pause();
+            if (playIcon) { playIcon.classList.remove('fa-pause'); playIcon.classList.add('fa-play'); }
+        }
+    };
+
+    // Use pointer events so touch devices trigger reliably
+    miniPlay.addEventListener('pointerup', togglePlay);
+    // Fallback for older devices
+    miniPlay.addEventListener('click', togglePlay);
+
+    // Prev: rebobina 10s (pointer)
+    if (miniPrev) {
+        miniPrev.addEventListener('pointerup', (e) => { e.preventDefault(); audio.currentTime = Math.max(0, audio.currentTime - 10); });
+        miniPrev.addEventListener('click', (e) => { e.preventDefault(); audio.currentTime = Math.max(0, audio.currentTime - 10); });
+    }
+
+    // Next: avanza 10s
+    if (miniNext) {
+        miniNext.addEventListener('pointerup', (e) => { e.preventDefault(); if (!isNaN(audio.duration)) audio.currentTime = Math.min(audio.duration, audio.currentTime + 10); });
+        miniNext.addEventListener('click', (e) => { e.preventDefault(); if (!isNaN(audio.duration)) audio.currentTime = Math.min(audio.duration, audio.currentTime + 10); });
+    }
+
+    // Al terminar la pista
+    audio.addEventListener('ended', () => {
+        if (playIcon) { playIcon.classList.remove('fa-pause'); playIcon.classList.add('fa-play'); }
     });
+
 }
 
 // Cuenta regresiva
@@ -128,8 +156,12 @@ function startExperience() {
         musica.play().catch(error => {
             console.log("El navegador bloqueó el autoplay, pero el clic debería permitirlo.");
         });
-        if (icon) icon.innerText = "🔊";
-        isMuted = false;
+        // Actualizar icono del mini player si existe
+        const mp = document.getElementById('mini-play');
+        if (mp) {
+            const i = mp.querySelector('i');
+            if (i) { i.classList.remove('fa-play'); i.classList.add('fa-pause'); }
+        }
     }
 }
 
