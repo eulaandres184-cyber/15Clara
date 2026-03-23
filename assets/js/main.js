@@ -80,39 +80,25 @@ if (audio && miniPlay) {
 
 }
 
-// Cuenta regresiva
-const target = new Date("Aug 22, 2026 21:30:00").getTime();
+/* // Mostrar fecha y hora actual en las minibox (reemplaza el contador)
+const updateDateTime = () => {
+    const now = new Date();
+    const day = now.getDate();
+    const month = now.toLocaleString('es-AR', { month: 'long' });
+    const time = now.toLocaleTimeString('es-AR', { hour12: false });
 
-const MS_IN_SECOND = 1000;
-const MS_IN_MINUTE = MS_IN_SECOND * 60;
-const MS_IN_HOUR = MS_IN_MINUTE * 60;
-const MS_IN_DAY = MS_IN_HOUR * 24;
+    const dayEl = document.getElementById('date-day');
+    const monthEl = document.getElementById('date-month');
+    const timeEl = document.getElementById('date-time');
 
-const updateCountdown = () => {
-    const now = Date.now();
-    const distance = target - now;
-
-    if (distance <= 0) {
-        // Cuando la cuenta regresiva termina
-        document.getElementById("days").innerText = 0;
-        document.getElementById("hours").innerText = 0;
-        document.getElementById("mins").innerText = 0;
-        clearInterval(intervalId);
-        return;
-    }
-
-    const days = Math.floor(distance / MS_IN_DAY);
-    const hours = Math.floor((distance % MS_IN_DAY) / MS_IN_HOUR);
-    const minutes = Math.floor((distance % MS_IN_HOUR) / MS_IN_MINUTE);
-
-    document.getElementById("days").innerText = days;
-    document.getElementById("hours").innerText = hours;
-    document.getElementById("mins").innerText = minutes;
+    if (dayEl) dayEl.innerText = day;
+    if (monthEl) monthEl.innerText = month.charAt(0).toUpperCase() + month.slice(1);
+    if (timeEl) timeEl.innerText = time;
 };
 
-const intervalId = setInterval(updateCountdown, 1000);
-updateCountdown(); // Ejecutar inmediatamente para no esperar 1 segundo
-
+setInterval(updateDateTime, 1000);
+updateDateTime();
+ */
 
 //FUNCION PARA INICIAR LA EXPERIENCIA DESPUÉS DE CERRAR EL MODAL
 function startExperience() {

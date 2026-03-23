@@ -152,7 +152,7 @@ body::before {
 
 .info-card .card-title {
     font-family: var(--font-base);
-    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    font-size: clamp(1.25rem, 1.5vw, 1.1rem);
     color: #fcd88c;
     margin-bottom: 1.5rem;
     text-align: center;
@@ -227,7 +227,7 @@ body::before {
     justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
-    margin-top: 1rem;
+    margin-top: 8rem;
 }
 .time-box {
     width: 90px;
