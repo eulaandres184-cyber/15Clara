@@ -235,7 +235,7 @@ class YouTubeSongManager {
      * Cargar canciones desde Firebase con listener en tiempo real
      */
     loadSongsFromFirebase() {
-        const dbRef = window.database.ref('claraSongs/songs');
+        const dbRef = (window.database || database).ref('claraSongs/songs');
         
         dbRef.on('value', (snapshot) => {
             this.songs = [];
@@ -380,7 +380,8 @@ class YouTubeSongManager {
         // Agregar canción
         if (this.useFirebase) {
             try {
-                await window.database.ref('claraSongs/songs').push(song);
+                const dbRef = (window.database || database).ref('claraSongs/songs');
+                await dbRef.push(song);
                 input.value = '';
                 this.showSuccess('✅ Canción agregada correctamente');
             } catch (error) {
@@ -403,7 +404,8 @@ class YouTubeSongManager {
      */
     removeSong(id) {
         if (this.useFirebase) {
-            window.database.ref(`claraSongs/songs/${id}`).remove()
+            const dbRef = (window.database || database).ref(`claraSongs/songs/${id}`);
+            dbRef.remove()
                 .catch(error => {
                     console.error('Error eliminando de Firebase:', error);
                     this.showError('❌ Error al eliminar la canción');
@@ -451,27 +453,47 @@ class YouTubeSongManager {
         grid.innerHTML = this.songs.map((song, index) => {
             const safeTitle = this.escapeHtml(song.title);
             const safeUrl = song.url ? this.escapeHtml(song.url) : '';
-            
+            const songLink = safeUrl ? `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeTitle}</a>` : `${safeTitle}`;
+
             return `
                 <div class="song-card" data-id="${song.id}">
-                    <div class="song-thumbnail">
+                    <div class="song-thumbnail" title="${song.type === 'youtube_url' ? 'YouTube' : 'A pedido'}">
                         ${song.type === 'youtube_url' ? '📺' : '🎵'}
                     </div>
-                    <div class="song-title" title="${safeTitle}">${safeTitle}</div>
+                    <div class="song-title" title="${safeTitle}">${songLink}</div>
                     <div class="song-url" title="${safeUrl || 'Título ingresado manualmente'}" style="cursor: help;">
                         ${safeUrl ? safeUrl.substring(0, 40) + '...' : 'Título personalizado'}
                     </div>
                     <div class="song-actions">
-                        <button class="btn-play" data-index="${index}" onclick="songManager && songManager.playSong('${safeUrl}', '${safeTitle}')">
+                        <button class="btn-play" data-index="${index}" type="button">
                             <i class="fas fa-play"></i> Reproducir
                         </button>
-                        <button class="btn-remove" data-id="${song.id}" onclick="songManager && songManager.removeSong('${song.id}')">
+                        <button class="btn-remove" data-id="${song.id}" type="button">
                             <i class="fas fa-trash"></i> Eliminar
                         </button>
                     </div>
                 </div>
             `;
         }).join('');
+
+        // Event handlers sin inline JS, para compatibilidad y evitar problemas con comillas
+        const playButtons = grid.querySelectorAll('.btn-play');
+        playButtons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const idx = Number(btn.dataset.index);
+                const selectedSong = this.songs[idx];
+                if (!selectedSong) return;
+                this.playSong(selectedSong.url, selectedSong.title);
+            });
+        });
+
+        const removeButtons = grid.querySelectorAll('.btn-remove');
+        removeButtons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const songId = btn.dataset.id;
+                if (songId) this.removeSong(songId);
+            });
+        });
     }
 
     /**

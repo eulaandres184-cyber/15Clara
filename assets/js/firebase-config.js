@@ -22,6 +22,9 @@ firebase.initializeApp(firebaseConfig);
 // Referencia a Realtime Database
 const database = firebase.database();
 
+// Exponer en window para que otros scripts no dependan de verbo global de variables local
+window.database = database;
+window.firebase = firebase;
 /**
  * Ruta de almacenamiento en Firebase
  * /claraSongs/songs -> Array de canciones

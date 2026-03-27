@@ -822,7 +822,8 @@ section.fade-in-content {
    ============================================ */
 
 .youtube-section {
-    width: min(100%, 900px);
+    width: 100%;
+    max-width: 900px;
     margin: 3rem auto;
     padding: 2rem 1rem;
 }
@@ -955,6 +956,20 @@ section.fade-in-content {
     margin-top: 2rem;
 }
 
+@supports not (display: grid) {
+    .songs-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .song-card {
+        flex: 1 1 220px;
+        min-width: 220px;
+    }
+}
+
 .song-card {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(252, 216, 136, 0.2);
@@ -1023,6 +1038,7 @@ section.fade-in-content {
     overflow: hidden;
     text-overflow: ellipsis;
     margin-bottom: 1rem;
+    word-break: break-all;
 }
 
 .song-actions {
