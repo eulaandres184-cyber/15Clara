@@ -68,7 +68,7 @@ body::before {
     justify-content: center; /* Centra verticalmente en la pantalla */
     text-align: center;
     color: var(--text);
-    margin-top: 5rem;
+    margin-top: 3rem;
     padding: 3rem 1rem; /* Espaciado general para móviles */
     gap: 2rem;              /* Agrega espacio controlado entre el nombre y la frase */
 }
@@ -152,7 +152,7 @@ body::before {
 
 .info-card .card-title {
     font-family: var(--font-base);
-    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    font-size: clamp(1.5rem, 1.5vw, 1.1rem);
     color: #fcd88c;
     margin-bottom: 1.5rem;
     text-align: center;
@@ -221,16 +221,15 @@ body::before {
     }
 }
 
-
 .countdown {
     display: flex;
     justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
-    margin-top: 1rem;
+    margin-top: 4rem;
 }
 .time-box {
-    width: 90px;
+    width: 100px;
     background: linear-gradient(145deg, #3d3d1a, #2a2a0a);
     border: 1px solid rgba(252, 216, 136, 0.4);
     border-radius: 14px;
@@ -248,7 +247,7 @@ body::before {
     margin: 2px 0 0;
     font-size: 1rem;
     letter-spacing: 0.05em;
-    color: #ffe5ad;
+     color: #f7ca7e;
 }
 
 .actions {
@@ -274,14 +273,31 @@ body::before {
 .btn:hover { transform: translateY(-2px); box-shadow: 0 9px 18px rgba(0,0,0,0.3); }
 
 .btn-maps {
-    background: #fcd88c;
-    color: #000;
-    border-color: #ffe5ad;
+    width: 300px;
+    background: linear-gradient(145deg, #3d3d1a, #2a2a0a);
+    border: 1px solid rgba(252, 216, 136, 0.4);
+    border-radius: 30px;
+    padding: 0.7rem 0.4rem;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+    color: #f7ca7e;
 }
 .btn-rsvp {
     background: #2a2a0a;
     color: #fcd88c;
     border-color: #fcd88c;
+}
+
+/* Separar icono del texto y hacerlo ligeramente mayor que el texto */
+.btn-rsvp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.btn-rsvp i {
+    font-size: 1.12em; /* ligeramente mayor que el texto */
+    line-height: 1;
+    display: inline-block;
 }
 
 .music-btn {
@@ -549,7 +565,7 @@ section.fade-in-content {
     justify-content: center;
     align-items: center;
     margin-top: 2rem;
-    font-size: 2rem;
+    font-size: 3rem;
     color: #f7b21f;
     animation: bounce 2s infinite;
     cursor: pointer;
@@ -593,11 +609,7 @@ section.fade-in-content {
     50% { opacity: 1; transform: scale(1.02); }
 }
 
-
-
-/* =========
-       CAROUSEL
-       ========= */
+/* ========= CAROUSEL   ========= */
     .carousel{
       position: relative;
       border-radius: var(--radius-lg);
