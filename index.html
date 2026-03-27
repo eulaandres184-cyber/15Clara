@@ -162,6 +162,37 @@
         </div>
     </section>
 
+    <!-- NUEVA SECCIÓN: YOUTUBE - CANCIONES -->
+    <section class="youtube-section">
+        <div class="youtube-container">
+            <h2 class="youtube-title">
+                <i class="fab fa-youtube"></i> Nuestras Canciones
+            </h2>
+            
+            <div class="input-group-youtube">
+                <input 
+                    type="text" 
+                    id="youtubeUrlInput" 
+                    class="youtube-input" 
+                    placeholder="Ingresa URL de YouTube o título de la canción"
+                    aria-label="URL de YouTube o título de canción"
+                >
+                <button id="addSongBtn" class="btn-add-song" aria-label="Agregar canción">
+                    <i class="fas fa-plus"></i> Agregar
+                </button>
+            </div>
+            
+            <div id="errorMessage" class="error-message"></div>
+            
+            <div id="songsGrid" class="songs-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🎵</div>
+                    <p>Agrega canciones que no puedan faltar</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Reproductor de Audio (mini footer style) -->
     <footer class="mini-footer-player">
         <div class="mini-player">
@@ -182,6 +213,13 @@
         </div>
     </footer>
 
+    <!-- Firebase SDK (Realtime Database) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="assets/js/firebase-config.js"></script>
+    
     <!-- Enlace al JS en la subcarpeta -->
     <script src="assets/js/main.js"></script>
 </body>
