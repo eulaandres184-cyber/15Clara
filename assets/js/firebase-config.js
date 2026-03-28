@@ -25,6 +25,11 @@ const database = firebase.database();
 // Exponer en window para que otros scripts no dependan de verbo global de variables local
 window.database = database;
 window.firebase = firebase;
+// Inicializar Firestore y exponerlo
+if (firebase.firestore) {
+    const firestore = firebase.firestore();
+    window.firestore = firestore;
+}
 /**
  * Ruta de almacenamiento en Firebase
  * /claraSongs/songs -> Array de canciones
@@ -120,4 +125,54 @@ async function updateSongInFirebase(songId, updates) {
         console.error('Error actualizando en Firebase:', error);
         return { success: false, error: error.message };
     }
+}
+
+// ---------------------
+// Firestore helpers
+// ---------------------
+const LINKS_COLLECTION = 'sharedLinks';
+
+/**
+ * Agrega un link/canción a Firestore (collection: sharedLinks)
+ */
+async function addLinkToFirestore(linkObj) {
+    if (!window.firestore) return { success: false, error: 'Firestore no inicializado' };
+    try {
+        const docRef = await window.firestore.collection(LINKS_COLLECTION).add(linkObj);
+        return { success: true, id: docRef.id };
+    } catch (error) {
+        console.error('Error guardando en Firestore:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Obtener todos los links desde Firestore (una sola vez)
+ */
+async function getLinksFromFirestore() {
+    if (!window.firestore) return [];
+    try {
+        const snapshot = await window.firestore.collection(LINKS_COLLECTION).get();
+        const items = [];
+        snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+        return items;
+    } catch (error) {
+        console.error('Error obteniendo links de Firestore:', error);
+        return [];
+    }
+}
+
+/**
+ * Observador en tiempo real de la colección sharedLinks
+ */
+function setupFirestoreListener(callback) {
+    if (!window.firestore) return null;
+    return window.firestore.collection(LINKS_COLLECTION).orderBy('timestamp', 'desc')
+        .onSnapshot((snapshot) => {
+            const items = [];
+            snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+            if (typeof callback === 'function') callback(items);
+        }, (error) => {
+            console.error('Firestore listener error:', error);
+        });
 }

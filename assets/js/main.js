@@ -80,25 +80,7 @@ if (audio && miniPlay) {
 
 }
 
-/* // Mostrar fecha y hora actual en las minibox (reemplaza el contador)
-const updateDateTime = () => {
-    const now = new Date();
-    const day = now.getDate();
-    const month = now.toLocaleString('es-AR', { month: 'long' });
-    const time = now.toLocaleTimeString('es-AR', { hour12: false });
 
-    const dayEl = document.getElementById('date-day');
-    const monthEl = document.getElementById('date-month');
-    const timeEl = document.getElementById('date-time');
-
-    if (dayEl) dayEl.innerText = day;
-    if (monthEl) monthEl.innerText = month.charAt(0).toUpperCase() + month.slice(1);
-    if (timeEl) timeEl.innerText = time;
-};
-
-setInterval(updateDateTime, 1000);
-updateDateTime();
- */
 
 //FUNCION PARA INICIAR LA EXPERIENCIA DESPUÉS DE CERRAR EL MODAL
 function startExperience() {
@@ -201,6 +183,7 @@ class YouTubeSongManager {
     constructor() {
         this.songs = [];
         this.useFirebase = typeof firebase !== 'undefined' && firebase.database;
+        this.useFirestore = typeof firebase !== 'undefined' && firebase.firestore;
         this.firebaseListener = null;
         this.init();
     }
@@ -222,13 +205,34 @@ class YouTubeSongManager {
             if (e.key === 'Enter') this.handleAddSong();
         });
 
-        // Cargar canciones
-        if (this.useFirebase) {
+        // Cargar canciones (prefiere Firestore si está disponible)
+        if (this.useFirestore) {
+            this.loadSongsFromFirestore();
+        } else if (this.useFirebase) {
             this.loadSongsFromFirebase();
         } else {
             this.songs = this.loadSongsFromLocal();
             this.renderSongs();
         }
+    }
+
+    /**
+     * Cargar canciones desde Firestore con listener en tiempo real
+     */
+    loadSongsFromFirestore() {
+        if (!window.firestore) return;
+        this.firebaseListener = window.firestore.collection('sharedLinks').orderBy('timestamp', 'desc')
+            .onSnapshot((snapshot) => {
+                this.songs = [];
+                snapshot.forEach((doc) => {
+                    this.songs.push({ id: doc.id, ...doc.data() });
+                });
+                this.renderSongs();
+            }, (error) => {
+                console.error('Error cargando de Firestore:', error);
+                this.songs = this.loadSongsFromLocal();
+                this.renderSongs();
+            });
     }
 
     /**
@@ -378,7 +382,16 @@ class YouTubeSongManager {
         }
 
         // Agregar canción
-        if (this.useFirebase) {
+        if (this.useFirestore) {
+            try {
+                await addLinkToFirestore(song);
+                input.value = '';
+                this.showSuccess('✅ Canción agregada correctamente (Firestore)');
+            } catch (error) {
+                console.error('Error guardando en Firestore:', error);
+                this.showError('❌ Error al guardar la canción');
+            }
+        } else if (this.useFirebase) {
             try {
                 const dbRef = (window.database || database).ref('claraSongs/songs');
                 await dbRef.push(song);
@@ -403,7 +416,14 @@ class YouTubeSongManager {
      * Elimina una canción de la lista
      */
     removeSong(id) {
-        if (this.useFirebase) {
+        if (this.useFirestore) {
+            if (!window.firestore) return;
+            window.firestore.collection('sharedLinks').doc(id).delete()
+                .catch(error => {
+                    console.error('Error eliminando de Firestore:', error);
+                    this.showError('❌ Error al eliminar la canción');
+                });
+        } else if (this.useFirebase) {
             const dbRef = (window.database || database).ref(`claraSongs/songs/${id}`);
             dbRef.remove()
                 .catch(error => {
@@ -453,7 +473,7 @@ class YouTubeSongManager {
         grid.innerHTML = this.songs.map((song, index) => {
             const safeTitle = this.escapeHtml(song.title);
             const safeUrl = song.url ? this.escapeHtml(song.url) : '';
-            const songLink = safeUrl ? `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeTitle}</a>` : `${safeTitle}`;
+            const songLink = `${safeTitle}`;
 
             return `
                 <div class="song-card" data-id="${song.id}">
@@ -461,8 +481,8 @@ class YouTubeSongManager {
                         ${song.type === 'youtube_url' ? '📺' : '🎵'}
                     </div>
                     <div class="song-title" title="${safeTitle}">${songLink}</div>
-                    <div class="song-url" title="${safeUrl || 'Título ingresado manualmente'}" style="cursor: help;">
-                        ${safeUrl ? safeUrl.substring(0, 40) + '...' : 'Título personalizado'}
+                    <div class="song-url" title="${safeUrl || 'Título ingresado manualmente'}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        ${safeUrl ? safeUrl : 'Título personalizado'}
                     </div>
                     <div class="song-actions">
                         <button class="btn-play" data-index="${index}" type="button">
