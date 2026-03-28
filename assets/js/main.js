@@ -36,6 +36,8 @@ function initializeWhatsappLinks() {
     });
 }
 
+// SUSPENDIDO: MINI FOOTER PLAYER
+/*
 // ==================== MINI FOOTER PLAYER ====================
 const audio = document.getElementById("musicaFondo");
 const miniPlay = document.getElementById("mini-play");
@@ -78,6 +80,61 @@ if (audio && miniPlay) {
         if (playIcon) { playIcon.classList.remove('fa-pause'); playIcon.classList.add('fa-play'); }
     });
 }
+*/
+
+// Flag global para suspender funcionalidad de links/canciones
+// Desactivado => permitir mini-player y control flotante
+window.SUSPEND_SONG_LINKS = false;
+
+// --- Floating music button setup ---
+function setupFloatingMusicButton() {
+    const audio = document.getElementById('musicaFondo');
+    if (!audio) return;
+
+    // Crear botón si no existe
+    let btn = document.getElementById('musicToggle');
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.id = 'musicToggle';
+        btn.className = 'music-btn';
+        btn.setAttribute('aria-label', 'Reproducir / Pausar música');
+        btn.innerHTML = '<i class="fas fa-music"></i>';
+        document.body.appendChild(btn);
+    }
+
+    const icon = btn.querySelector('i');
+
+    const updateIcon = () => {
+        if (!icon) return;
+        icon.className = 'fas ' + (audio.paused ? 'fa-music' : 'fa-volume-high');
+    };
+
+    // Toggle play/pause on click
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (audio.paused) {
+            audio.play().catch(() => {});
+        } else {
+            audio.pause();
+        }
+        updateIcon();
+    });
+
+    // Keep icon in sync with audio state
+    audio.addEventListener('play', updateIcon);
+    audio.addEventListener('pause', updateIcon);
+    audio.addEventListener('ended', updateIcon);
+
+    // Initialize icon state (do not auto-play here)
+    updateIcon();
+}
+
+// Ejecutar setup en DOMContentLoaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupFloatingMusicButton);
+} else {
+    setupFloatingMusicButton();
+}
 
 // ==================== GESTOR DE CANCIONES DE YOUTUBE ====================
 //FUNCION PARA INICIAR LA EXPERIENCIA DESPUÉS DE CERRAR EL MODAL
@@ -116,9 +173,9 @@ function startExperience() {
         }, 600);
     }
 
-    // Reproducir la música automáticamente al entrar
+    // Reproducir la música automáticamente al entrar (SUSPENDIBLE)
     const musica = document.getElementById('musicaFondo');
-    if (musica) {
+    if (musica && !window.SUSPEND_SONG_LINKS) {
         musica.play().catch(error => {
             console.log("El navegador bloqueó el autoplay, pero el clic debería permitirlo.");
         });
@@ -128,6 +185,8 @@ function startExperience() {
             const i = mp.querySelector('i');
             if (i) { i.classList.remove('fa-play'); i.classList.add('fa-pause'); }
         }
+    } else if (musica && window.SUSPEND_SONG_LINKS) {
+        console.log('Reproducción de música SUSPENDIDA (flag SUSPEND_SONG_LINKS).');
     }
 }
 
@@ -577,17 +636,30 @@ class YouTubeSongManager {
     }
 }
 
-// Crear instancia global del gestor
+// Crear instancia global del gestor (SUSPENDIBLE)
 let songManager = null;
 
-// Inicializar cuando el DOM esté listo
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        // Esperar a que Firebase esté disponible
+if (!window.SUSPEND_SONG_LINKS) {
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            // Esperar a que Firebase esté disponible
+            if (typeof firebase !== 'undefined') {
+                songManager = new YouTubeSongManager();
+            } else {
+                // Fallback sin Firebase
+                console.warn('Firebase no disponible, usando localStorage');
+                setTimeout(() => {
+                    if (!songManager) {
+                        songManager = new YouTubeSongManager();
+                    }
+                }, 500);
+            }
+        });
+    } else {
         if (typeof firebase !== 'undefined') {
             songManager = new YouTubeSongManager();
         } else {
-            // Fallback sin Firebase
             console.warn('Firebase no disponible, usando localStorage');
             setTimeout(() => {
                 if (!songManager) {
@@ -595,16 +667,7 @@ if (document.readyState === 'loading') {
                 }
             }, 500);
         }
-    });
-} else {
-    if (typeof firebase !== 'undefined') {
-        songManager = new YouTubeSongManager();
-    } else {
-        console.warn('Firebase no disponible, usando localStorage');
-        setTimeout(() => {
-            if (!songManager) {
-                songManager = new YouTubeSongManager();
-            }
-        }, 500);
     }
+} else {
+    console.log('YouTubeSongManager SUSPENDIDO (flag SUSPEND_SONG_LINKS).');
 }
