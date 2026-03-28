@@ -77,11 +77,9 @@ if (audio && miniPlay) {
     audio.addEventListener('ended', () => {
         if (playIcon) { playIcon.classList.remove('fa-pause'); playIcon.classList.add('fa-play'); }
     });
-
 }
 
-
-
+// ==================== GESTOR DE CANCIONES DE YOUTUBE ====================
 //FUNCION PARA INICIAR LA EXPERIENCIA DESPUÉS DE CERRAR EL MODAL
 function startExperience() {
     const modal = document.getElementById('welcomeModal');
